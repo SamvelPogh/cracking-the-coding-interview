@@ -1,0 +1,227 @@
+#include<bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+//question 1.1 is unique?
+//variant 1
+bool is_unique(string txt) {
+	for (int i = 0; i < txt.size(); ++i) {
+		for (int j = i+1; j < txt.length(); ++j) {
+			if (txt[i] == txt[j]) { return false; }
+		}
+	}
+	return true;
+}
+
+//variant 2
+bool isunique(string txt){
+sort(txt.begin(),txt.end());
+for(int i=0;i<txt.size();++i){
+if(txt[i]==txt[i+1]) return false;
+}
+return true;
+}
+
+//1.2 check premutation
+bool arepremutation(string txt1,string txt 2){
+if(txt1.size() != txt2.size()) return false;
+sort(txt1.begin(),txt1.end());
+sort(txt2.begin(),txt2.end());
+for(int i=0;i<txt1.length();++i){
+if(txt1[i] != txt2[i]) return false;
+}
+return true;
+}
+
+
+//? karox enq jamanakavor string zangvac sarqel nhvac depqum tmp te voch?
+//1.3 function change space to "%20"
+void spacecheng(string & txt, int size) {
+	string tmp = "";
+	for (int i = 0; i < size; ++i) {
+		if (txt[i] == ' ') {
+			tmp += "%20";
+		}
+		else {
+			tmp += txt[i];
+		}
+	}
+	txt = tmp;
+
+}
+
+
+//1.4 palindrome permutation
+bool arepalindrome(string  txt) {
+	string tmp = "";
+	for (int i = 0; i < txt.length(); ++i) {
+		if (txt[i] != ' ' && txt[i]!=',' && txt[i]!='.') {
+			tmp += txt[i];
+		}
+		
+	}
+	txt = tmp;
+	int i = 0; 
+	int j = txt.length() - 1;
+	while (i != j && i<j) {
+		if (txt[i] != txt[j]) return false;
+		++i;
+		--j;
+	}
+	return true;
+}
+
+//1.5 One away function for wright or false edits of string
+bool OneWay(string firsttxt,string changedtxt) {
+	if (firsttxt.length() == changedtxt.length()) {
+
+		int countofchange = 0;
+		for (int i = 0; i < firsttxt.length(); ++i) {
+			if (firsttxt[i] != changedtxt[i])
+				++countofchange;
+		}
+		if (countofchange == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
+	if (firsttxt.length() > changedtxt.length()) {
+	
+		for (int i = 0; i < changedtxt.length(); ++i) {
+			if (firsttxt[i] != changedtxt[i]) {
+				
+				for (int j = i; i < changedtxt.length(); ++i) {
+					if (firsttxt[j + 1] != changedtxt[j]) return false;
+				}
+			}
+
+		}
+		return true;
+	}
+	else {
+		
+		for (int i = 0; i < firsttxt.length(); ++i) {
+			if (firsttxt[i] != changedtxt[i]) {
+				
+				for (int j = i; i < firsttxt.length(); ++i) {
+					if (firsttxt[j] != changedtxt[j + 1]) return false;
+				}
+			}
+		}
+		return true;
+	}
+		
+}
+
+
+
+
+//Function for the string compresion
+string txtcompresion(string txt) {
+	string tmp="";
+	for (int i = 0; i < txt.length(); ++i) {
+		if (txt[i] == txt[i + 1]) {
+			int countofsim = 0;
+			int tm = i;
+			string countofsim1 = "";
+			while (txt[i] == txt[tm]) {
+				++countofsim;
+				++tm;
+			}
+			
+			countofsim1 = to_string(countofsim);
+			tmp += txt[i] + countofsim1;
+			i += countofsim-1;
+			
+		}
+		else {
+			tmp += txt[i];
+			tmp += "1";
+		}
+	}
+	if (tmp.length() < txt.length()) {
+		return tmp;
+	}
+	else {
+		return txt;
+	}
+}
+
+
+//1.7 Rotate matrix function 
+//write N value
+
+#define N 
+void rotate90DegClockwise(int a[N][N]) {
+
+	
+	for (int i = 0; i < N / 2; i++) {
+		for (int j = i; j < N - i - 1; j++) {
+
+			
+			int tmp = a[i][j];
+			a[i][j] = a[N - 1 - j][i];
+			a[N - 1 - j][i] = a[N - 1 - i][N - 1 - j];
+			a[N - 1 - i][N - 1 - j] = a[j][N - 1 - i];
+			a[j][N - 1 - i] = tmp;
+		}
+	}
+}
+//1.8 function zero matrix
+//write M and N value
+#define M
+#define N
+void zeromatrix(int arr[M][N]) {
+	vector < pair <int, int> > arr2;
+	printfd(arr);
+	cout << endl;
+	for (int i = 0; i < N; ++i) {
+		for (int j = 0; j < M; ++j) {
+			if (arr[j][i] == 0) {
+				int n = 0;
+				int m = 0;
+				while (n != N-1 && m != M-1) {
+					
+					arr2.push_back(make_pair(j, n));
+					arr2.push_back(make_pair(m, i));
+					++n;
+					++m;
+				}
+
+			}
+			
+		}
+	}
+
+	for (int i = 0; i < arr2.size(); ++i) {
+		arr[arr2[i].first][arr2[i].second] = 0;
+	}
+	
+
+}
+
+//1.9 Issubstring function
+
+bool issubstring(string txt, string txt2) {
+	bool t = false;
+	if (txt.size() == txt2.size()) {
+		for (int i = 0; i < txt.size(); ++i) {
+			if (txt[i] == txt2[0]) {
+				if (txt.substr(i) == txt2.substr(0, txt2.size() - i)) {
+					t= true;
+				}
+
+			}
+		}
+		return t;
+
+	}
+	else return false;
+
+}
